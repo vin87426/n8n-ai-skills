@@ -1,0 +1,4 @@
+interface:
+  display_name: "潛點即時狀況分析"
+  short_description: "依最新觀測與現場資料評估潛點未來三小時的風險與趨勢"
+  default_prompt: "使用 $dive-site-nowcast-analysis 分析這個潛點現在到未來三小時的條件、風險與資料信賴度。"
