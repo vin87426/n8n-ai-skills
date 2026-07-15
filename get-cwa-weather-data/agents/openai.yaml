@@ -2,3 +2,5 @@ interface:
   display_name: "CWA 官方氣象資料"
   short_description: "查找、擷取、解析與驗證中央氣象署的觀測、預報、警特報及歷史資料"
   default_prompt: "使用 $get-cwa-weather-data 查詢指定地點與時段的 CWA 官方氣象資料，並標示資料時間與限制。"
+policy:
+  allow_implicit_invocation: false

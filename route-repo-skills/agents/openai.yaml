@@ -1,0 +1,6 @@
+interface:
+  display_name: "Repo Skill 調度器"
+  short_description: "嚴格從本 repo 選擇目標 skill，整理並最小化交接輸入"
+  default_prompt: "使用 $route-repo-skills 判斷這個請求應交給本 repo 的哪個 skill，並準備最小必要輸入。"
+policy:
+  allow_implicit_invocation: true

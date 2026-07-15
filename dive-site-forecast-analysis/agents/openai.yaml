@@ -2,3 +2,5 @@ interface:
   display_name: "潛點未來海況分析"
   short_description: "整合未來海況與潛點地形，比較風險、趨勢及較佳下水時窗"
   default_prompt: "使用 $dive-site-forecast-analysis 比較這個潛點未來幾天的海況、主要風險與較佳候選時窗。"
+policy:
+  allow_implicit_invocation: false
