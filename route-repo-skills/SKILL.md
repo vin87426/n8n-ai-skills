@@ -1,6 +1,6 @@
 ---
 name: route-repo-skills
-description: 將輸入請求分類到本 repository 明確允許的 AI Skill，依目標 skill 的輸入契約抽取、正規化並最小化必要資訊，再交由該 skill 執行。當 AI 需要決定應使用 CWA 資料、潛點即時分析或潛點預報分析，處理同時包含多個意圖的請求，或必須防止調用 repo 外 skill 時使用；本 skill 是此 repo 執行領域任務的唯一入口。
+description: 將輸入請求分類到本 repository 明確允許的 AI Skill，依目標 skill 的輸入契約抽取、正規化並最小化必要資訊，再交由該 skill 執行。當 AI 需要決定應使用 Plurk 留言格式化、CWA 資料、潛點即時分析或潛點預報分析，處理同時包含多個意圖的請求，或必須防止調用 repo 外 skill 時使用；本 skill 是此 repo 執行領域任務的唯一入口。
 ---
 
 # 調度 Repo Skills
@@ -27,13 +27,15 @@ description: 將輸入請求分類到本 repository 明確允許的 AI Skill，�
    - 只有「現在狀況」與「未來日期規劃」等可各自產生答案的多重目標，才拆成多個子請求。
 
 3. 選擇 primary target。
-   - 先判斷使用者要的是資料取得／API 整合，還是潛點風險分析。
-   - 潛點分析再依分析基準與時間範圍區分 nowcast 或 forecast。
+   - 先判斷最終產物是否為根據已提供文字或脈絡整理的 Plurk 留言；若是，選擇 Plurk 留言格式化。
+   - 其餘請求再判斷使用者要的是資料取得／API 整合，還是潛點風險分析。
+   - 潛點分析依分析基準與時間範圍區分 nowcast 或 forecast。
    - 使用 catalog 的優先規則解決重疊；不得只以單一關鍵字路由。
    - 使用者明確指定 allowlist skill 時仍要檢查意圖相容性。若明顯不相容，說明衝突並依實際目標路由或要求最小澄清。
 
 4. 準備最小輸入。
    - 依目標 schema 抽取目標、地點、絕對時間、時區、限制、已提供證據與期望輸出。
+   - Plurk 留言只保留要改寫的文字、必要回覆脈絡、已確認的帳號、必留內容與語氣；不要把整段對話當成留言素材。
    - 保留會改變分析結果的使用者偏好、風險限制、來源 URL、觀測時間與明確假設。
    - 將相對日期正規化為絕對日期；不要猜測無法從輸入可靠推出的地點、座標、時區或條件。
    - 對缺少欄位使用 `unknown` 或列入 `missing_fields`，不得編造值。
@@ -57,7 +59,7 @@ description: 將輸入請求分類到本 repository 明確允許的 AI Skill，�
 ## 處理無法路由的請求
 
 - `needs_clarification`：存在兩個以上合理 target，且一個簡短答案即可消除歧義。
-- `unsupported`：請求不屬於 catalog 中任何 skill。列出本 repo 可處理的範圍後停止。
+- `unsupported`：請求不屬於 catalog 中任何 skill。列出本 repo 可處理的 Plurk 留言格式化、CWA 資料與潛點分析範圍後停止。
 - `target_unavailable`：target 在 catalog 中，但目前環境無法讀取或調用。指出缺少的 exact skill name 後停止。
 - `ready`：完成最小 handoff 並可交由 target 執行。
 

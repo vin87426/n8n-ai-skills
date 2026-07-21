@@ -6,6 +6,7 @@
 
 - [Route envelope](#route-envelope)
 - [Common rules](#common-rules)
+- [`format-plurk-comment` input](#format-plurk-comment-input)
 - [`get-cwa-weather-data` input](#get-cwa-weather-data-input)
 - [`dive-site-nowcast-analysis` input](#dive-site-nowcast-analysis-input)
 - [`dive-site-forecast-analysis` input](#dive-site-forecast-analysis-input)
@@ -50,6 +51,23 @@ unknowns: []
 - 將相對日期轉成 `YYYY-MM-DD`；時間使用 `YYYY-MM-DDTHH:mm:ss±HH:mm`，無法確定 offset 時保留當地時間並列入 `unknowns`。
 - 不在 `prepared_input` 放入秘密。最多使用 `credentials_available: true | false | unknown`。
 - 不要為了填滿 schema 編造選填值。
+
+## `format-plurk-comment` input
+
+```yaml
+objective: required
+source_text: required
+reply_context: optional
+mention_accounts: []
+must_preserve: []
+tone: optional
+response_language: optional
+user_constraints: []
+assumptions: []
+unknowns: []
+```
+
+`source_text` 只放要整理成留言的原文、草稿或筆記，不附加未清理的對話全文。`reply_context` 只保留理解回覆所必要的原始噗文或上一則留言。`mention_accounts` 只能放已確認的 Plurk 帳號，不可放顯示暱稱或推測值。將必留事實、網址或措辭放入 `must_preserve`；360 字元上限與只輸出留言本文是 target 固定契約，不必重複加入 `user_constraints`。
 
 ## `get-cwa-weather-data` input
 
@@ -166,5 +184,6 @@ unknowns: []
 保留：
 
 - 會改變 target 結果的事實、限制、來源、時間與使用者偏好
+- Plurk 留言要改寫的來源文字、必要回覆脈絡、已確認帳號與必留內容
 - 使用者已提供且仍具時效的觀測或預報資料
 - 明確標記的假設與未知值

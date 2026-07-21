@@ -1,0 +1,6 @@
+interface:
+  display_name: "Plurk 留言格式化"
+  short_description: "將輸入文字整理為簡短自然且不超過 360 字元的 Plurk 留言"
+  default_prompt: "使用 $format-plurk-comment 將這段文字整理成可直接發布且不超過 360 字元的 Plurk 留言。"
+policy:
+  allow_implicit_invocation: false

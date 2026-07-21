@@ -1,6 +1,22 @@
 # Routable Skill Catalog
 
-本文件是 `$route-repo-skills` 的 runtime allowlist。只有下列三個二級標題中的 skill 可以成為 target。`route-repo-skills` 是控制層，不得成為 target。
+本文件是 `$route-repo-skills` 的 runtime allowlist。只有下列四個二級標題中的 skill 可以成為 target。`route-repo-skills` 是控制層，不得成為 target。
+
+## `format-plurk-comment`
+
+路由條件：
+
+- 使用者提供文字、草稿、條列或回覆脈絡，要求整理、縮短、潤飾或轉換成 Plurk／噗浪留言。
+- 使用者要求留言不超過 360 字元、套用 Plurk 的帳號提及或可接受格式，或只輸出能直接貼上的留言文字。
+- 輸入文字碰巧包含氣象、潛水或 CWA 內容，但最終目標只是改寫已提供內容。
+
+不要路由：
+
+- 使用者要求查證或取得尚未提供的氣象／潛水內容，而不是改寫現有文字；依實際資料或分析目標選擇其他 skill。
+- 使用者要求代為發布、存取帳號、操作 Plurk API，或處理一般社群平臺整合。
+- 要求撰寫的不是 Plurk 留言，且沒有 Plurk 格式或 360 字元限制。
+
+最小可開始輸入：明確改寫目標與要整理的來源文字。詳細欄位見 [handoff schema](handoff-schema.md)。
 
 ## `get-cwa-weather-data`
 
@@ -53,11 +69,12 @@
 
 依序判斷：
 
-1. 先判斷最終產物：資料／程式整合，或潛點風險分析。
-2. 潛點風險分析以目標時間範圍區分 nowcast 與 forecast。
-3. CWA 是潛點分析的資料來源時，不因此把 primary target 改成 `get-cwa-weather-data`。
-4. 同一請求同時要求現在與未來日期時，拆成 nowcast 與 forecast 兩個原子子請求；不要建立第三種混合路由。
-5. 不屬於以上三種 target 時回傳 `unsupported`，不得調用其他 skill。
+1. 最終產物是根據已提供內容整理的 Plurk 留言時，選擇 `format-plurk-comment`；不要因留言主題包含 CWA 或潛水而改選資料或分析 skill。
+2. 其餘請求先判斷最終產物是資料／程式整合，或潛點風險分析。
+3. 潛點風險分析以目標時間範圍區分 nowcast 與 forecast。
+4. CWA 是潛點分析的資料來源時，不因此把 primary target 改成 `get-cwa-weather-data`。
+5. 同一請求同時要求現在與未來日期時，拆成 nowcast 與 forecast 兩個原子子請求；不要建立第三種混合路由。
+6. 不屬於以上四種 target 時回傳 `unsupported`，不得調用其他 skill。
 
 # Catalog Maintenance Rules
 
